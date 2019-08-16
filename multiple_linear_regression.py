@@ -32,7 +32,7 @@ def feature_scaling(X):
 #代价函数
 def compute_cost(X_test,y_test,theta):
     num_X = X_test.shape[0]
-    cost = 0.5 * np.sum(np.square(X_test.dot(theta) - y_test)) / num_X
+    cost = 0.5 * (X_test.dot(theta) - y_test).T.dot(X_test.dot(theta) - y_test) / num_X
     return cost
 
 #梯度下降函数

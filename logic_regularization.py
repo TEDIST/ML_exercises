@@ -30,6 +30,7 @@ def sigmoid(z):
 
 def cost_function(theta,X,y):
     num_X = X.shape[0]
+    theta = theta.reshape(X.shape[1], 1)
     cost = np.sum(np.dot((-y).T, np.log(sigmoid(np.dot(X,theta)))) - np.dot((1 - y).T,\
     np.log(1 - sigmoid(np.dot(X,theta))))) / num_X + 0.5 * 1 * np.dot(theta.T,theta) / num_X
     return cost
@@ -49,10 +50,10 @@ def main():
     X2 = data[:,[1]]
     y = data[:,[2]]
     X = X_polynomial(X1,X2)#按题目要求将多项式特征矩阵求出
-    theta = np.zeros((X.shape[1], 1))
+    theta = np.zeros((X.shape[1], 1)).flatten()
     result = op.minimize(fun=cost_function, x0=theta, args=(X, y), method='BFGS', jac=gradient)
     theta = np.array(result["x"]).reshape(X.shape[1],1)
-    X_test = np.array([[0.9, 0.3]])
+    X_test = np.array([[0.3, 0.3]])
     print(X_test)
     X_norm = X_polynomial(X_test[:,[0]],X_test[:,[1]])
     predict = sigmoid(X_norm.dot(theta))
